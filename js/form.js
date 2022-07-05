@@ -15,6 +15,18 @@ const disableForms = () => {
   });
 };
 
+const enableForms = () => {
+  adForm.removeAttribute('disabled');
+  filtresChildren.forEach((child) => {
+    child.removeAttribute('disabled');
+  });
+  formChildren.forEach((field) => {
+    field.removeAttribute('disabled');
+  });
+};
+
 disableForms();
+enableForms();
 
 export {disableForms};
+export {enableForms};
