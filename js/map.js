@@ -1,8 +1,5 @@
 import { createCard } from './cards.js';
 
-const COUNT_AFTER_DOT = 5;
-const MAX_MARKERS_COUNT = 10;
-
 const ZOOM_LEVEL = 13;
 const START_MAIN_PIN_POSITION = {
   lat: 35.681729,
@@ -11,8 +8,6 @@ const START_MAIN_PIN_POSITION = {
 
 const addressInputElement = document.querySelector('#address');
 const checkBoxFeatures = document.querySelectorAll('.map__checkbox');
-
-const roundingNumbers = (point) => `${point.lat.toFixed(COUNT_AFTER_DOT)},${point.lng.toFixed(COUNT_AFTER_DOT)}`;
 
 let map = null;
 let markerGroup = null;
@@ -61,15 +56,14 @@ const resetMap = () => {
   checkBoxFeatures.forEach((item) => {
     item.checked = false;
   });
-  addressInputElement.value = roundingNumbers(START_MAIN_PIN_POSITION);
+  addressInputElement.value = `${START_MAIN_PIN_POSITION.lat.toFixed(5)},${START_MAIN_PIN_POSITION.lng.toFixed(5)}`;
   markerRed.setLatLng(START_MAIN_PIN_POSITION);
   map.setView(START_MAIN_PIN_POSITION, ZOOM_LEVEL);
-  renderMarkers(offersCopy.slice(0, MAX_MARKERS_COUNT));
+  renderMarkers(offersCopy.slice(0, 10));
 };
 
 const activateMap = (onLoad, offers) => {
   offersCopy = offers;
-  addressInputElement.value = roundingNumbers(START_MAIN_PIN_POSITION);
   map = L.map('map-canvas')
     .on('load', onLoad)
     .setView(START_MAIN_PIN_POSITION, ZOOM_LEVEL);
@@ -83,12 +77,12 @@ const activateMap = (onLoad, offers) => {
   markerRed.addTo(map);
   markerRed.on('drag', (evt) => {
     const coordinates = evt.target.getLatLng();
-    addressInputElement.value = roundingNumbers(coordinates);
+    addressInputElement.value = `${coordinates.lat.toFixed(5)},${coordinates.lng.toFixed(5)}`;
   });
 
   markerGroup = L.layerGroup();
   markerGroup.addTo(map);
-  renderMarkers(offers.slice(0, MAX_MARKERS_COUNT));
+  renderMarkers(offers.slice(0, 10));
 };
 
 export { renderMarkers, activateMap, resetMap };

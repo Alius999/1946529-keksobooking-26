@@ -3,8 +3,6 @@ import { debounce } from './util.js';
 
 const RERENDER_DELAY = 500;
 const DEFAULT_VALUE = 'any';
-const OFFERS_COUNT = 10;
-
 const PriceRanges = {
   ANY: {
     minPrice: 0,
@@ -48,25 +46,16 @@ const filterByFeatures = (features) => {
 
 const filterOffer = (offers, rerenderMarkers) => {
 
-  const filteredArray = [];
-
-  for (const offer of offers) {
-    if (filteredArray.length >= OFFERS_COUNT) {
-      break;
-    }
-    if (
-      filterByHouseType(offer.offer.type) &&
-      filterByPrice(offer.offer.price) &&
-      filterByRoomsCount(offer.offer.rooms) &&
-      filterByGuestsCount(offer.offer.guests) &&
-      filterByFeatures(offer.offer.features)
-    ) {
-      filteredArray.push(offer);
-    }
-  }
-
-  rerenderMarkers(filteredArray);
+  const filteredOffers = offers.filter(({ offer }) =>
+    filterByHouseType(offer.type) &&
+    filterByPrice(offer.price) &&
+    filterByRoomsCount(offer.rooms) &&
+    filterByGuestsCount(offer.guests) &&
+    filterByFeatures(offer.features)
+  );
+  rerenderMarkers(filteredOffers.slice(0, 10));
 };
+
 
 const initFilters = (offers) => {
   const onFilterChange = debounce(() => filterOffer(offers, renderMarkers), RERENDER_DELAY);

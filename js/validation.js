@@ -3,9 +3,6 @@ import { onSubmitFormButtonClick } from './api.js';
 import { blockSubmitButton, showErrorModal, showSuccessModal, unblockSubmitButton } from './messages.js';
 import { resetForm } from './form.js';
 
-const MIN_LENGTH = 30;
-const MAX_LENGTH = 100;
-
 const MATCH_ROOMS_OPTIONS = {
   '1': ['1'],
   '2': ['1', '2'],
@@ -41,7 +38,7 @@ const resetValidation = () => pristine.reset();
 
 const validateTitle = () => {
   const titleTrimmed = titleInputElement.value.trim();
-  return titleTrimmed.length >= MIN_LENGTH && titleTrimmed.length <= MAX_LENGTH;
+  return titleTrimmed.length >= 30 && titleTrimmed.length <= 100;
 };
 
 const getTitleError = () => 'Введите от 30 до 100 символов, без лишних пробелов в начале и в конце';
@@ -80,7 +77,7 @@ const getPriceErrorMessage = () => {
   }
 };
 
-const onCheckInChange = (evt) => {
+const onCheckInCHange = (evt) => {
   checkOutElement.value = evt.target.value;
 };
 
@@ -117,7 +114,7 @@ const activateFormValidation = () => {
   pristine.addValidator(addressInputElement, validateAddress, 'Обязательное поле');
   addFormElement.addEventListener('submit', onUserFormSubmit);
   addFormElement.querySelectorAll('[name="type"]').forEach((item) => item.addEventListener('change', onHouseChange));
-  checkInElement.addEventListener('change', onCheckInChange);
+  checkInElement.addEventListener('change', onCheckInCHange);
   checkOutElement.addEventListener('change', onCheckOutChange);
 };
 
