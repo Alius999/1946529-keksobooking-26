@@ -1,92 +1,61 @@
-import {OBJECTS_TYPES_PRICE} from './data.js';
+import { resetMap } from './map.js';
+import { updateSliderOptions } from './slider.js';
+import { resetValidation } from './validation.js';
+import { resetHousePreviews } from './upload-images.js';
 
-const adForm = document.querySelector('.ad-form');
-const mapFiltres = document.querySelector('.map__filters');
-const filtresChildren = [...mapFiltres.children];
-const formChildren = [...adForm.children];
+const DEFAULT_VALUE = 'any';
 
-// Находим  список
-const type = adForm.querySelector('#type');
-// Находим поле с ценой
-const priceField = adForm.querySelector('#price');
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
-const optionRooms = adForm.querySelector('#room_number');
-const optionGuests = adForm.querySelector('#capacity');
+const addFormElement = document.querySelector('.ad-form');
+const resetAllButtonElement = document.querySelector('.ad-form__reset');
+const adFormInputElements = document.querySelectorAll('.ad-form fieldset');
+const adFormSelectElements = document.querySelectorAll('.ad-form__element');
+const mapSelectElements = document.querySelectorAll('.map__filter');
+const mapCheckBoxElements = document.querySelectorAll('.map__checkbox ');
+const mapFiltersContainerElement = document.querySelector('.map__filters');
 
-const ROOMS_MAX_VALUE = 100;
-const NOT_FOR_GUESTS = 0;
-
-
-// Создаём функцию для обекта со значением цены
-// const placeholderPrice = (priceObject) => OBJECTS_TYPES_PRICE[priceObject].price;
-
-const disableForms = () => {
-  adForm.setAttribute('disabled', 'disabled');
-  filtresChildren.forEach((child) => {
-    child.setAttribute('disabled', 'disabled');
-  });
-  formChildren.forEach((field) => {
-    field.setAttribute('disabled', 'disabled');
-  });
+const setAllFormsDisabled = () => {
+  addFormElement.classList.add('ad-form--disabled');
+  adFormInputElements.forEach((element) => element.classList.add('ad-form--disabled'));
+  adFormSelectElements.forEach((element) => {element.disabled = true;});
+  mapFiltersContainerElement.classList.add('map__filters--disabled');
+  mapSelectElements.forEach((element) => {element.disabled = true;});
+  mapCheckBoxElements.forEach((element) => {element.disabled = true;});
 };
 
-const enableForms = () => {
-  adForm.removeAttribute('disabled');
-  filtresChildren.forEach((child) => {
-    child.removeAttribute('disabled');
-  });
-  formChildren.forEach((field) => {
-    field.removeAttribute('disabled');
-  });
+const setMapFiltersFormEnabled = () => {
+  mapFiltersContainerElement.classList.remove('map__filters--disabled');
+  mapSelectElements.forEach((element) => {element.disabled = false;});
+  mapCheckBoxElements.forEach((element) => {element.disabled = false;});
 };
 
-// Код валидации pristine
-const pristine = new Pristine(adForm, {
-  classTo: 'ad-form__element',
-  errorTextParent: 'ad-form__element',
-  errorTextTag: 'span',
-  errorTextClass: 'ad-form__element--error-text',
-}, false);
+const setAdFormEnabled = () => {
+  addFormElement.classList.remove('ad-form--disabled');
+  adFormInputElements.forEach((element) => element.classList.remove('ad-form--disabled'));
+  adFormSelectElements.forEach((element) => {element.disabled = false;});
+};
 
-timeIn.addEventListener('change', () => {
-  timeOut.value = timeIn.value;
-});
+const resetForm = () => {
+  addFormElement.reset();
+  updateSliderOptions(0);
+  resetValidation();
+  resetMap();
+  resetHousePreviews();
+  document.querySelector('input[id="price"]').placeholder = 'от 0';
+};
 
-timeOut.addEventListener('change', () => {
-  timeIn.value = timeOut.value;
-});
-
-// По событию change меняем значение placeholder
-
-type.addEventListener('change', () => {
-  priceField.placeholder = OBJECTS_TYPES_PRICE[type.value].price;
-});
-
-pristine.addValidator(optionRooms, () => {
-  if (Number(optionRooms.value) >= optionGuests.value
-      && Number(optionGuests.value) !== NOT_FOR_GUESTS
-      && Number(optionRooms.value) !== ROOMS_MAX_VALUE)
-  {
-    return true;
+const setDefaultValues = () => {
+  mapSelectElements.forEach((element) => {
+    element.value = DEFAULT_VALUE;
   }
-  if (Number(optionRooms.value) === ROOMS_MAX_VALUE
-    && Number(optionGuests.value) === NOT_FOR_GUESTS) {
-    return true;
-  }
-  return false;
+  );
+};
 
-}, 'Количество комнат должно быть больше или равно количеству гостей. 100 комнат только "НЕ для гостей"');
-
-adForm.addEventListener('submit', (evt) => {
+const onResetButtonClick = (evt) => {
   evt.preventDefault();
-  pristine.validate();
-});
+  resetForm();
+  setDefaultValues();
+};
 
-disableForms();
-enableForms();
+resetAllButtonElement.addEventListener('click', (evt) => onResetButtonClick(evt));
 
-export {disableForms};
-export {enableForms};
-export {adForm};
-
+export { setAllFormsDisabled, setAdFormEnabled, setMapFiltersFormEnabled, resetForm };
