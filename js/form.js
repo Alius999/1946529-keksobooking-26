@@ -3,7 +3,6 @@ import { updateSliderOptions } from './slider.js';
 import { resetValidation } from './validation.js';
 import { resetHousePreviews } from './upload-images.js';
 
-<<<<<<< HEAD
 const adForm = document.querySelector('.ad-form');
 const mapFiltres = document.querySelector('.map__filters');
 const filtresChildren = [...mapFiltres.children];
@@ -33,7 +32,7 @@ const disableForms = () => {
   formChildren.forEach((field) => {
     field.setAttribute('disabled', 'disabled');
   });
-=======
+}
 const addFormElement = document.querySelector('.ad-form');
 const resetAllButtonElement = document.querySelector('.ad-form__reset');
 const adFormInputElements = document.querySelectorAll('.ad-form fieldset');
@@ -49,7 +48,6 @@ const setAllFormsDisabled = () => {
   mapFiltersContainerElement.classList.add('map__filters--disabled');
   mapSelectElements.forEach((element) => element.setAttribute('disabled', 'true'));
   mapCheckBoxElements.forEach((element) => element.setAttribute('disabled', 'true'));
->>>>>>> ddf3a0e (Завершает проект)
 };
 
 const setMapFiltersFormEnabled = () => {
@@ -58,7 +56,6 @@ const setMapFiltersFormEnabled = () => {
   mapCheckBoxElements.forEach((element) => element.removeAttribute('disabled'));
 };
 
-<<<<<<< HEAD
 // Код валидации pristine
 const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
@@ -80,7 +77,6 @@ timeOut.addEventListener('change', () => {
 type.addEventListener('change', () => {
   priceField.placeholder = OBJECTS_TYPES_PRICE[type.value].price;
 });
-=======
 const setAdFormEnabled = () => {
   addFormElement.classList.remove('ad-form--disabled');
   adFormInputElements.forEach((element) => element.classList.remove('ad-form--disabled'));
@@ -94,7 +90,6 @@ const resetForm = () => {
   resetMap();
   resetHousePreviews();
 };
->>>>>>> ddf3a0e (Завершает проект)
 
 const setDefaultValues = () => {
   document.querySelector('input[id="price"]').placeholder = 'от 0';
@@ -112,11 +107,8 @@ const onResetButtonClick = (evt) => {
 
 resetAllButtonElement.addEventListener('click', (evt) => onResetButtonClick(evt));
 
-<<<<<<< HEAD
 export {disableForms};
 export {enableForms};
 export {adForm};
 
-=======
 export { setAllFormsDisabled, setAdFormEnabled, setMapFiltersFormEnabled, resetForm };
->>>>>>> ddf3a0e (Завершает проект)

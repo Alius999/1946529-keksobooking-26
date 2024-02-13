@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import './array-generating.js';
 import './cards.js';
 import {listOfBookingObjects} from './data.js';
@@ -20,7 +19,7 @@ export {listOfBookingObjects};
 
 disableForms();
 enableForms();
-=======
+
 import { activateFormValidation } from './validation.js';
 import { setAllFormsDisabled, setAdFormEnabled, setMapFiltersFormEnabled } from './form.js';
 import { activateMap } from './map.js';
@@ -41,4 +40,4 @@ initUploadAvatar();
 initUploadHousePic();
 activateSlider();
 activateFormValidation();
->>>>>>> ddf3a0e (Завершает проект)
+

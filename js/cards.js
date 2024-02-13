@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {listOfBookingObjects} from './main.js';
 import {OBJECTS_TYPES_PRICE} from './data.js';
 
@@ -64,14 +63,13 @@ const createObject = (objectItem) => {
     const photoItems = document.querySelectorAll('.popup__photo');
     photoItems[i].src = objectItem.offer.photos[i];
   }
-=======
+}
 const HOUSE_TYPE_MATCHES = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
   bungalow: 'Бунгало',
   hotel: 'Отель'
->>>>>>> ddf3a0e (Завершает проект)
 };
 
 const cardTemplateElement = document.querySelector('template[id="card"]').content.querySelector('.popup');
